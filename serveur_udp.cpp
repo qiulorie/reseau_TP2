@@ -13,7 +13,7 @@ using namespace std;
 int main() {
 
     //création socket
-    int socketUdp = socket(AF_INET, SOCK_DGRAM/**mode datagramme**/, 0); 
+    int socketUdp = socket(AF_INET, SOCK_DGRAM/**mode datagramme**/, 0/* pas de flag*/); 
     if (socketUdp == -1) { //si socket() échoue, programme s'arrête
         perror("erreur  création socket");
         return EXIT_FAILURE;
