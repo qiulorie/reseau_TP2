@@ -24,7 +24,7 @@ int main() {
     sockaddr_in adresseServeur{}; //struct pour représenter adreses IPV4
     adresseServeur.sin_family = AF_INET; //IPv4
     adresseServeur.sin_port = htons(PORT); //port réseau
-    socklen_t addlen = sizeof(adresseServeur);
+    socklen_t addLen = sizeof(adresseServeur);
 
     //conversion adresse IP
     int add = inet_pton(AF_INET, "0.0.0.0"/**serveur a accès à ttes les interfaces*/, &adresseServeur.sin_addr);  //convertit une adresse IP notation texte en adresse binaire
@@ -61,7 +61,7 @@ int main() {
         }
 
         buffer[bytesRecus] = '\n'; //ajout caractère fin de chaîne
-        cout << "message recu !" << buffer << endl; 
+        cout << "message recu : " << buffer << endl; 
         messagesRecus++;
     }
 }

@@ -29,7 +29,6 @@ int main(int argc, char*argv[]) {
 
     //vérifier l'adresse du serveur
     cout << "adresse IP du serveur :" << argv[1] << endl;
-    return EXIT_SUCCESS;
 
     //création socket et ouverture de celui-ci
     int socketUdp = socket(AF_INET, SOCK_DGRAM, 0);
@@ -40,6 +39,39 @@ int main(int argc, char*argv[]) {
 
     //configuration adresse serveur
     sockaddr_in adresseServeur;
-    adresseServeur.sin_family = 
+    adresseServeur.sin_family = AF_INET;
+    adresseServeur.sin_port = htons(PORT);
+    socklen_t addLen = sizeof(adresseServeur);
+
+    //conversion adresse IP donnée en arg
+    int add = inet_pton(AF_INET, argv[1], &adresseServeur.sin_addr);
+    if (add <= 0) {
+        perror("erreur création socket UDP");
+    }
+
+    cout << "client connecté à" << argv[1] << "sur le port" << PORT << endl;
+
+    //envoi des messages
+    char buffer[BUFFER_SIZE];
+    while (true) {
+    
+        cout << "entrez un message :";
+        cin.getline(buffer, BUFFER_SIZE); //lecture entrée user
+        //envoi message au serveur
+        ssize_t tailleBytes = sendto(socketUdp, buffer, strlen(buffer), 0, reinterpret_cast<sockaddr*>(&adresseServeur), sizeof(adresseServeur));
+        if (tailleBytes < 0) {
+            perror("erreur envoi du message");
+                
+        }
+
+        cout << "message envoyé : " << buffer << endl;
+    }   
+
+    //fermeture socket
+    close(socketUdp);
+    cout << "client terminé" << endl;
+    return EXIT_SUCCESS;
+
+
 
 }
