@@ -31,6 +31,15 @@ int main(int argc, char*argv[]) {
     cout << "adresse IP du serveur :" << argv[1] << endl;
     return EXIT_SUCCESS;
 
-    //création socket
+    //création socket et ouverture de celui-ci
     int socketUdp = socket(AF_INET, SOCK_DGRAM, 0);
+    if (socketUdp == -1) {
+        perror("erreur création socket");
+        return EXIT_FAILURE;
+    };
+
+    //configuration adresse serveur
+    sockaddr_in adresseServeur;
+    adresseServeur.sin_family = 
+
 }
