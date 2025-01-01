@@ -53,6 +53,7 @@ int main(int argc, char*argv[]) {
 
     //envoi des messages
     char buffer[BUFFER_SIZE];
+    //boucle pour pouvoir envoyer plusieurs messages 
     while (true) {
     
         cout << "entrez un message :";

@@ -9,7 +9,7 @@ using namespace std;
 
 #define PORT 9600
 #define BUFFER_SIZE 100
-#define BACKLOG  5 //taille fille d'attente pour connexions entrantes
+#define BACKLOG  100 //taille fille d'attente pour connexions entrantes
 
 int main(int argc, char* argv[]) {
 
@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
             return EXIT_FAILURE;
     }
 
-        //création socket
-    int socketServeur = socket(AF_INET, SOCK_DGRAM/**mode datagramme**/, 0/* pas de flag*/); 
+    //création socket
+    int socketServeur = socket(AF_INET, SOCK_STREAM/**mode flux**/, 0/* pas de flag*/); 
     if (socketServeur == -1) { //si socket() échoue, programme s'arrête
         perror("erreur  création socket");
         return EXIT_FAILURE;
@@ -75,13 +75,13 @@ int main(int argc, char* argv[]) {
 
         //réception du message du client
         char buffer[BUFFER_SIZE] = {0};
-        ssize_t lecture = read(socketClient, buffer, BUFFER_SIZE - 1); 
+        ssize_t lectureOctets = read(socketClient, buffer, BUFFER_SIZE - 1/**excluant caractère de fin de chaine*/); 
 
-        if (lecture > 0) {
-            buffer[lecture] = '\n'; //caractère de fin de chaine ajouté
+        if (lectureOctets > 0) {
+            buffer[lectureOctets] = '\n'; //caractère de fin de chaine ajouté
             cout << "message reçu : " << buffer << endl;
         }
-        else if (lecture == 0) {
+        else if (lectureOctets == 0) {
             cout << "connexion fermée" << endl;
         }
 
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
 
         //fermeture de connexion avec le client
         close (socketClient);
-        cout << "connexion avec client terminée" << endl;
+        cout << "connexion avec client terminée " << endl;
     
 
 
