@@ -68,8 +68,9 @@ int main(int argc, char*argv[]) {
 
         //envoi du message au serveur
         ssize_t tailleBytes = sendto(socketUdp, buffer, strlen(buffer), 0, reinterpret_cast<sockaddr*>(&adresseServeur), sizeof(adresseServeur));
-        if (tailleBytes < 0) {
+        if (tailleBytes <= 0) {
             perror("erreur envoi du message");
+            break;
                 
         }
 

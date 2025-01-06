@@ -43,7 +43,7 @@ int main() {
     
 
     //message : serveur prêt après config socket 
-    cout << "serveur prêt et en attente de messages udp sur les interfaces, port" << PORT << endl;
+    cout << "serveur prêt et en attente de messages udp sur les interfaces, port " << PORT << endl;
 
     //réception des messages
     char buffer[BUFFER_SIZE] = {0}; //buffer stockant les msg
@@ -53,11 +53,14 @@ int main() {
     int messagesRecus = 0;
     //réception messages UDP
     while (messagesRecus < 10) {
+
+        memset(buffer, 0, BUFFER_SIZE); //efface le tampon avant chaque réception
+
         ssize_t bytesRecus = recvfrom (socketUdp, buffer, BUFFER_SIZE-1, 0, reinterpret_cast<sockaddr*>(&adresseClient), &adresseClientLength);
 
         if (bytesRecus <= 0) {
             perror("erreur réception données");
-            continue;
+            break;
         }
 
         buffer[bytesRecus] = '\n'; //ajout caractère fin de chaîne
