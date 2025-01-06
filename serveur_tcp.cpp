@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
-    cout << "le serveur TCP est en attente de connexions sur " << argv[1] << endl;
+    cout << "le serveur TCP est en attente de connexions sur : " << argv[1] << endl;
 
     //boucle pour accepter les connexions
     while (true) {

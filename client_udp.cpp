@@ -9,7 +9,7 @@
 using namespace std;
 
 #define PORT 9600 
-#define BUFFER_SIZE 100 //taille max buffer réception
+#define BUFFER_SIZE 20 //taille max buffer réception
 
 
 /** 
@@ -28,7 +28,7 @@ int main(int argc, char*argv[]) {
     }
 
     //vérifier l'adresse du serveur
-    cout << "adresse IP du serveur :" << argv[1] << endl;
+    cout << "adresse IP du serveur : " << argv[1] << endl;
 
     //création socket et ouverture de celui-ci
     int socketUdp = socket(AF_INET, SOCK_DGRAM, 0);
@@ -49,16 +49,24 @@ int main(int argc, char*argv[]) {
         perror("erreur création socket UDP");
     }
 
-    cout << "client connecté à" << argv[1] << "sur le port" << PORT << endl;
+    cout << "client connecté à : " << argv[1] << "sur le port : " << PORT << endl;
 
     //envoi des messages
     char buffer[BUFFER_SIZE];
-    //boucle pour pouvoir envoyer plusieurs messages 
+    //boucle pour pouvoir envoyer plusieurs messages au serveur
     while (true) {
     
         cout << "entrez un message :";
         cin.getline(buffer, BUFFER_SIZE); //lecture entrée user
         //envoi message au serveur
+
+        //si l'utilisateur rentre quit il termine la connexion
+        if (strcmp(buffer, "quit") == 0) {
+            cout << "fermeture de la connexion" << endl;
+            break;
+        }
+
+        //envoi du message au serveur
         ssize_t tailleBytes = sendto(socketUdp, buffer, strlen(buffer), 0, reinterpret_cast<sockaddr*>(&adresseServeur), sizeof(adresseServeur));
         if (tailleBytes < 0) {
             perror("erreur envoi du message");
