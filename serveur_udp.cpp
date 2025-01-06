@@ -43,7 +43,7 @@ int main() {
     
 
     //message : serveur prêt après config socket 
-    cout << "serveur prêt et en attente de messages udp sur les interfaces, port " << PORT << endl;
+    cout << "serveur prêt et en attente de messages udp sur toutes les interfaces, port " << PORT << endl;
 
     //réception des messages
     char buffer[BUFFER_SIZE] = {0}; //buffer stockant les msg
