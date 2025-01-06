@@ -8,7 +8,7 @@
 using namespace std;
 
 #define PORT 9600 
-#define BUFFER_SIZE 20 //taille max buffer réception
+#define BUFFER_SIZE 20 //taille max buffer réception 
 
 int main() {
 
